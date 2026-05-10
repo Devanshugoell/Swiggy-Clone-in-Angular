@@ -1,0 +1,85 @@
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-8 lg:px-12">
+      @if (!cartService.items().length) {
+        <app-empty-cart></app-empty-cart>
+      } @else {
+        <div class="grid gap-8 lg:grid-cols-[1.2fr,0.8fr]">
+          <section class="rounded-[2rem] bg-white p-5 shadow-sm ring-1 ring-black/5 sm:p-8">
+            <div class="mb-6 flex items-center justify-between gap-4">
+              <div>
+                <h1 class="text-2xl font-black text-slate-900">Orders</h1>
+                <p class="text-sm text-slate-500">Review items before placing your order.</p>
+              </div>
+              <button type="button" class="rounded-2xl border border-rose-200 px-4 py-2 text-sm font-bold text-rose-600" (click)="clearCart()">
+                Clear cart
+              </button>
+            </div>
+
+            <div class="space-y-5">
+              @for (item of cartService.items(); track item.card.info.id) {
+                <article class="grid gap-4 border-b border-slate-200 pb-5 sm:grid-cols-[120px,1fr]">
+                  <img [src]="itemImage(item)" [alt]="item.card.info.name" class="h-28 w-28 rounded-3xl object-cover" />
+
+                  <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                    <div class="space-y-2">
+                      <p class="text-xs font-bold uppercase tracking-[0.25em]" [ngClass]="item.card.info.isVeg === 1 ? 'text-emerald-600' : 'text-rose-600'">
+                        {{ item.card.info.isVeg === 1 ? 'Veg' : 'Non Veg' }}
+                      </p>
+                      <h2 class="text-lg font-bold text-slate-900">{{ item.card.info.name }}</h2>
+                      <div class="flex items-center gap-3 text-sm">
+                        <span class="text-slate-400 line-through">₹ {{ cartService.getItemPrice(item) + 50 }}</span>
+                        <span class="font-bold text-slate-800">₹ {{ cartService.getItemPrice(item) }}</span>
+                      </div>
+                    </div>
+
+                    <div class="flex flex-col items-start gap-3 sm:items-end">
+                      <div class="inline-flex items-center rounded-2xl border border-slate-200 bg-slate-50 p-1">
+                        <button type="button" class="cart-stepper" (click)="cartService.decreaseItem(item.card.info.id)">-</button>
+                        <span class="w-10 text-center text-sm font-bold">{{ item.quantity || 1 }}</span>
+                        <button type="button" class="cart-stepper" (click)="cartService.increaseItem(item.card.info.id)">+</button>
+                      </div>
+                      <button type="button" class="text-sm font-bold text-rose-600" (click)="remove(item.card.info.id, item.card.info.name)">Remove</button>
+                    </div>
+                  </div>
+                </article>
+              }
+            </div>
+          </section>
+
+          <aside class="rounded-[2rem] bg-slate-900 p-6 text-white shadow-sm">
+            <h2 class="text-xl font-black">Order Summary</h2>
+            <p class="mt-2 text-sm text-white/70">Total Items ({{ cartService.items().length }})</p>
+
+            <div class="mt-6 space-y-4 border-b border-white/10 pb-6">
+              @for (item of cartService.items(); track item.card.info.id) {
+                <div class="flex items-center justify-between gap-4 text-sm">
+                  <div>
+                    <span class="font-semibold">{{ item.card.info.name }}</span>
+                    <span class="text-white/60"> ({{ item.quantity || 1 }})</span>
+                  </div>
+                  <span>₹ {{ cartService.getItemTotal(item) }}</span>
+                </div>
+              }
+            </div>
+
+            <div class="mt-6 space-y-3 text-sm">
+              <div class="flex items-center justify-between text-white/70">
+                <span>Subtotal</span>
+                <span>₹ {{ cartService.subtotal() }}</span>
+              </div>
+              <div class="flex items-center justify-between text-white/70">
+                <span>Delivery Charges</span>
+                <span>₹ {{ cartService.deliveryFee() }}</span>
+              </div>
+              <div class="flex items-center justify-between text-lg font-black">
+                <span>Total Amount</span>
+                <span>₹ {{ cartService.total() }}</span>
+              </div>
+            </div>
+
+            <button type="button" class="mt-8 w-full rounded-2xl bg-emerald-500 px-5 py-3 text-sm font-black uppercase tracking-[0.2em] text-white transition hover:bg-emerald-400" (click)="placeOrder()">
+              Place Order
+            </button>
+          </aside>
+        </div>
+      }
+    </div>

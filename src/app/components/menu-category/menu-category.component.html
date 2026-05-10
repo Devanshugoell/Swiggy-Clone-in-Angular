@@ -1,0 +1,26 @@
+    <section class="rounded-3xl bg-white p-4 shadow-sm ring-1 ring-black/5 sm:p-6 mt-4">
+      <button
+        type="button"
+        class="flex w-full items-center justify-between text-left"
+        (click)="toggleExpanded()"
+      >
+        <span class="text-base font-extrabold text-slate-900 sm:text-lg">
+          {{ category.title }} ({{ category.itemCards.length }})
+        </span>
+        @if (expanded()) {
+          <svg class="h-6 w-6 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 15l6-6 6 6" />
+          </svg>
+        } @else {
+          <svg class="h-6 w-6 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6" />
+          </svg>
+        }
+      </button>
+
+      @if (expanded()) {
+        <div class="mt-4">
+          <app-menu-items [items]="category.itemCards"></app-menu-items>
+        </div>
+      }
+    </section>

@@ -1,0 +1,49 @@
+    <div class="flex min-h-screen items-center justify-center bg-[linear-gradient(135deg,#fff7ed_0%,#ffffff_40%,#f8fafc_100%)] px-4 py-10">
+      <div class="grid w-full max-w-5xl overflow-hidden rounded-[2rem] bg-white shadow-2xl ring-1 ring-black/5 lg:grid-cols-[1.1fr,0.9fr]">
+        <div class="hidden bg-[radial-gradient(circle_at_top_left,_#fb923c,_#f97316_40%,_#7c2d12_120%)] p-10 text-white lg:flex lg:flex-col lg:justify-between">
+          <div class="space-y-4">
+            <p class="text-sm font-bold uppercase tracking-[0.35em] text-white/70">Hungry?</p>
+            <h1 class="max-w-sm text-5xl font-black leading-tight">Order food from favorite restaurants near you.</h1>
+          </div>
+          <img src="/images/LOGIN-ICON.avif" alt="Food delivery" class="w-full max-w-md self-center rounded-[2rem] object-cover shadow-2xl" />
+        </div>
+
+        <div class="lg:mt-20 p-6 sm:p-10">
+          <div class="mb-8 space-y-2">
+            <p class="text-sm font-bold uppercase tracking-[0.3em] text-orange-500">Welcome back</p>
+            <h2 class="text-3xl font-black text-slate-900">Sign in</h2>
+          </div>
+
+          <form class="space-y-5" [formGroup]="form" (ngSubmit)="submit()">
+            <div class="space-y-2">
+              <label class="text-sm font-semibold text-slate-700">Email</label>
+              <input class="form-input" type="email" formControlName="email" placeholder="name@example.com" />
+              @if (fieldTouched('email') && form.controls.email.invalid) {
+                <p class="form-error">Enter a valid email address.</p>
+              }
+            </div>
+
+            <div class="space-y-2">
+              <label class="text-sm font-semibold text-slate-700">Password</label>
+              <input class="form-input" type="password" formControlName="password" placeholder="Minimum 6 characters" />
+              @if (fieldTouched('password') && form.controls.password.invalid) {
+                <p class="form-error">Password must be at least 6 characters.</p>
+              }
+            </div>
+
+            @if (errorMessage()) {
+              <p class="rounded-2xl bg-rose-50 px-4 py-3 text-sm font-medium text-rose-600">{{ errorMessage() }}</p>
+            }
+
+            <button type="submit" class="primary-button" [disabled]="submitting()">
+              {{ submitting() ? 'Signing in...' : 'Sign in' }}
+            </button>
+          </form>
+
+          <p class="mt-6 text-sm text-slate-500">
+            Don't have an account?
+            <a routerLink="/register" class="font-bold text-orange-500">Create one</a>
+          </p>
+        </div>
+      </div>
+    </div>

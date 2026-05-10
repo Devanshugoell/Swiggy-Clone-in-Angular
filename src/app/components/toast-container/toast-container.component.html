@@ -1,0 +1,19 @@
+    <div class="pointer-events-none fixed bottom-4 right-4 z-[80] flex w-[min(92vw,24rem)] flex-col gap-3">
+      @for (message of notificationService.messages(); track message.id) {
+        <div
+          class="pointer-events-auto rounded-2xl px-4 py-3 text-sm font-medium text-white shadow-xl"
+          [ngClass]="{
+            'bg-emerald-600': message.type === 'success',
+            'bg-rose-600': message.type === 'error',
+            'bg-slate-900': message.type === 'info'
+          }"
+        >
+          <div class="flex items-center justify-between gap-3">
+            <span>{{ message.message }}</span>
+            <button type="button" class="text-white/80" (click)="notificationService.dismiss(message.id)">
+              x
+            </button>
+          </div>
+        </div>
+      }
+    </div>

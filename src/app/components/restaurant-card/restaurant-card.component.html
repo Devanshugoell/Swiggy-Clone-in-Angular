@@ -1,0 +1,38 @@
+    <article class="group relative flex h-full flex-col gap-3 rounded-3xl bg-white p-3 shadow-sm ring-1 ring-black/5 transition hover:-translate-y-1 hover:shadow-lg">
+      @if (showNewBadge) {
+        <span class="absolute right-3 top-3 z-10 rounded-full bg-orange-500 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
+          New
+        </span>
+      }
+
+      <div class="relative overflow-hidden rounded-2xl bg-slate-100" [ngClass]="imageHeightClass">
+        @if (restaurant?.cloudinaryImageId) {
+          <img
+            class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+            [src]="imageBaseUrl + restaurant.cloudinaryImageId"
+            [alt]="restaurant?.name || 'Restaurant'"
+          />
+        } @else {
+          <div class="flex h-full items-center justify-center text-sm text-slate-400">No image</div>
+        }
+
+        @if (restaurant?.aggregatedDiscountInfoV3?.header || restaurant?.aggregatedDiscountInfoV3?.subHeader) {
+          <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 py-3 text-white">
+            <div class="text-base font-extrabold">{{ restaurant?.aggregatedDiscountInfoV3?.header }}</div>
+            <div class="text-xs font-medium">{{ restaurant?.aggregatedDiscountInfoV3?.subHeader }}</div>
+          </div>
+        }
+      </div>
+
+      <div class="space-y-1 px-1 text-slate-600">
+        <h3 class="line-clamp-1 text-base font-bold text-slate-900">{{ restaurant?.name }}</h3>
+        <p class="flex items-center gap-2 text-sm font-semibold text-slate-700">
+          <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-emerald-50 text-emerald-700">★</span>
+          <span>{{ restaurant?.avgRating || '4.2' }}</span>
+          <span class="h-1 w-1 rounded-full bg-slate-400"></span>
+          <span>{{ restaurant?.sla?.slaString || '25 mins' }}</span>
+        </p>
+        <p class="line-clamp-1 text-sm">{{ (restaurant?.cuisines || []).join(', ') }}</p>
+        <p class="line-clamp-1 text-sm">{{ restaurant?.areaName }}</p>
+      </div>
+    </article>
