@@ -70,37 +70,6 @@ npm start
 
 The app runs with Angular dev server (usually at `http://localhost:4200`).
 
-## Available Scripts
-
-- `npm start` -> Starts Angular dev server
-- `npm run dev` -> Alias for dev server
-- `npm run build` -> Production build
-- `npm run watch` -> Development watch build
-
-## Build Output
-
-- Angular output path: `dist/swiggy-clone-angular`
-
-## Deployment (Netlify)
-
-This repository includes:
-
-- `netlify.toml` with SPA redirect rules
-- `public/_redirects` fallback support
-
-Build command:
-
-```bash
-npm run build
-```
-
-Publish directory configured in `netlify.toml`:
-
-```toml
-dist
-```
-
-If your deployment expects the Angular app output folder directly, use `dist/swiggy-clone-angular` as the publish directory.
 
 ## Project Structure
 
